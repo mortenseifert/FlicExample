@@ -30,15 +30,32 @@ page 50200 "Flic Entries API"
                     Caption = 'ButtonId';
                     ApplicationArea = All;
                 }
+                field("action"; "Flic Action")
+                {
+                    Caption = 'Action';
+                    ApplicationArea = All;
+                }
             }
         }
     }
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    var
+        JobQueueEntry: Record "Job Queue Entry";
+        LblProcessFlic: Label 'Process flic';
     begin
         Insert(true);       // Force insert trigger to be run
-
         Modify(true);
+
+        JobQueueEntry.Init();
+        JobQueueEntry."Object Type to Run" := JobQueueEntry."Object Type to Run"::Codeunit;
+        JobQueueEntry."Object ID to Run" := Codeunit::"Flic Process";
+        JobQueueEntry."Record ID to Process" := Rec.RecordId;
+        JobQueueEntry.Description := LblProcessFlic;
+        JobQueueEntry."Earliest Start Date/Time" := CurrentDateTime() + 15000;       // Delay 15 seconds
+        JobQueueEntry."Maximum No. of Attempts to Run" := 1;
+        Codeunit.Run(Codeunit::"Job Queue - Enqueue", JobQueueEntry);
+
         exit(false);
     end;
 }

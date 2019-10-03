@@ -4,7 +4,7 @@ page 50201 "Flic Entries"
     Caption = 'Flic Entries';
     Editable = false;
     SourceTable = "Flic Entry";
-    SourceTableView = sorting ("Created At");
+    SourceTableView = sorting("Created At");
     UsageCategory = History;
     ApplicationArea = All;
 
@@ -19,6 +19,10 @@ page 50201 "Flic Entries"
                     ApplicationArea = All;
                 }
                 field("Created at"; "Created at")
+                {
+                    ApplicationArea = All;
+                }
+                field("Processed At"; "Processed At")
                 {
                     ApplicationArea = All;
                 }
