@@ -81,6 +81,8 @@ table 50200 "Flic Entry"
         FlicButton."Created At" := CurrentDateTime;
         FlicButton."Last Used At" := CurrentDateTime;
         FlicButton.Insert(true);
+
+        Message('done');
     end;
 
 }
