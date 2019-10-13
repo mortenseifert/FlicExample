@@ -38,6 +38,12 @@ table 50200 "Flic Entry"
         {
             Caption = 'Flic Action';
         }
+        field(13; "Flick Button"; Text[100])
+        {
+            Caption = 'Flic Button';
+            FieldClass = FlowField;
+            CalcFormula = lookup ("Flic Button".Description where(Id = field("Flic Id")));
+        }
     }
 
     keys
@@ -60,6 +66,7 @@ table 50200 "Flic Entry"
     procedure GetFlicId(ButtonId: Text[32]): Guid
     var
         FlicButton: Record "Flic Button";
+        Lbl_Untitled: Label 'Untitled';
     begin
         FlicButton.SetRange("Button Id", ButtonId);
         if FlicButton.FindFirst() then begin
@@ -80,6 +87,7 @@ table 50200 "Flic Entry"
         FlicButton."Button Id" := ButtonId;
         FlicButton."Created At" := CurrentDateTime;
         FlicButton."Last Used At" := CurrentDateTime;
+        FlicButton.Description := Lbl_Untitled;
         FlicButton.Insert(true);
 
         Message('done');

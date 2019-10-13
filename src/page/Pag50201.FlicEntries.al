@@ -29,6 +29,15 @@ page 50201 "Flic Entries"
                 field("Button Id"; "Button Id")
                 {
                     ApplicationArea = All;
+                    Visible = false;
+                }
+                field("Flick Button"; "Flick Button")
+                {
+                    ApplicationArea = All;
+                }
+                field("Flic Action"; "Flic Action")
+                {
+                    ApplicationArea = All;
                 }
                 field(State; State)
                 {
